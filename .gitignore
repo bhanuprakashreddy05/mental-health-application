@@ -1,28 +1,18 @@
-# Firebase build and deployment files
-/firebase-debug.log
-/firebase-debug.*.log
-.firebaserc
-
-# Firebase Hosting
-/firebase.json
-*.cache
-hosting/.cache
-
-# Firebase Functions
-/functions/node_modules/
-/functions/.env
-/functions/package-lock.json
-
-# Firebase Emulators
-/firebase-*.zip
-/.firebase/
-/emulator-ui/
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment files (local configs)
-/.env.*
+*.iml
+.gradle
+.kotlin
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.env
+debug.keystore

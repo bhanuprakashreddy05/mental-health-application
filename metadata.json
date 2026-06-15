@@ -1,0 +1,6 @@
+{
+  "name": "Peace Mind",
+  "description": "A mental wellness, mood tracking, self-care journal and AI companion application designed to foster peaceful mindfulness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
