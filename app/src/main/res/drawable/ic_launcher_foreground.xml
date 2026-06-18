@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Left outer petal (Mint) -->
+    <path
+        android:fillColor="#6FCF97"
+        android:pathData="M54,54 C35,60 30,30 54,20 C32,25 22,48 54,54 Z" />
+    
+    <!-- Right outer petal (Mint) -->
+    <path
+        android:fillColor="#6FCF97"
+        android:pathData="M54,54 C73,60 78,30 54,20 C76,25 86,48 54,54 Z" />
+
+    <!-- Center main petal (Crisp Serene White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,16 C42,38 35,55 54,80 C73,55 66,38 54,16 Z" />
+
+    <!-- Left inner wing (Accent Gold) -->
+    <path
+        android:fillColor="#F2C94C"
+        android:pathData="M54,34 C44,52 38,68 54,82 C38,68 36,48 54,34 Z" />
+
+    <!-- Right inner wing (Accent Gold) -->
+    <path
+        android:fillColor="#F2C94C"
+        android:pathData="M54,34 C64,52 70,68 54,82 C70,68 72,48 54,34 Z" />
+
+    <!-- Core bud of self-empowerment -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,48 C48,56 48,66 54,76 C60,66 60,56 54,48 Z" />
+</vector>

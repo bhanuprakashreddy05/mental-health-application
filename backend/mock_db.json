@@ -1,0 +1,138 @@
+{
+  "users": {
+    "demo-user-id": {
+      "uid": "demo-user-id",
+      "email": "demo@peacemind.com",
+      "displayName": "Mindful Explorer",
+      "photoURL": "avatar1",
+      "createdAt": "2026-06-16T04:15:45.013Z",
+      "updatedAt": "2026-06-16T04:15:45.013Z"
+    },
+    "mock-demo-user-id": {
+      "uid": "mock-demo-user-id",
+      "email": "demo@peacemind.com",
+      "displayName": "Mindful Creator",
+      "photoURL": "avatar1",
+      "createdAt": "2026-06-16T04:32:27.689Z",
+      "updatedAt": "2026-06-16T04:37:50.301Z"
+    }
+  },
+  "moods": {
+    "mood1": {
+      "id": "mood1",
+      "userId": "demo-user-id",
+      "mood": "Calm",
+      "note": "Enjoyed a quiet morning walk by the river.",
+      "rating": 8,
+      "timestamp": "2026-06-13T04:15:45.013Z"
+    },
+    "mood2": {
+      "id": "mood2",
+      "userId": "demo-user-id",
+      "mood": "Anxious",
+      "note": "Feeling a bit overwhelmed about upcoming presentations.",
+      "rating": 4,
+      "timestamp": "2026-06-14T04:15:45.013Z"
+    },
+    "mood3": {
+      "id": "mood3",
+      "userId": "demo-user-id",
+      "mood": "Happy",
+      "note": "Had a wonderful dinner with old friends.",
+      "rating": 9,
+      "timestamp": "2026-06-15T04:15:45.013Z"
+    },
+    "6e6xlczza57": {
+      "userId": "demo-user-id",
+      "mood": "Calm",
+      "note": "Writing API tests is relaxing.",
+      "rating": 8,
+      "timestamp": "2026-06-16T04:15:45.063Z",
+      "id": "6e6xlczza57"
+    },
+    "gi0t814h6e": {
+      "userId": "mock-demo-user-id",
+      "mood": "Happy",
+      "note": "Felt great coding this full-stack web application!",
+      "rating": 7,
+      "timestamp": "2026-06-16T04:25:30.127Z",
+      "id": "gi0t814h6e"
+    },
+    "zn3q029vzw8": {
+      "userId": "mock-demo-user-id",
+      "mood": "Happy",
+      "note": "",
+      "rating": 7,
+      "timestamp": "2026-06-16T04:44:02.320Z",
+      "id": "zn3q029vzw8"
+    }
+  },
+  "diary": {
+    "diary1": {
+      "id": "diary1",
+      "userId": "demo-user-id",
+      "title": "Reflections on Peace",
+      "content": "Today I learned the value of taking small breaks. Work was hectic, but I stepped away for 5 minutes and just practiced slow breathing. It made a world of difference.",
+      "emotionsTags": [
+        "Calm",
+        "Stressed"
+      ],
+      "summary": "The entry describes a stressful work day managed successfully by taking a short breathing break, showcasing resilience and self-awareness.",
+      "recommendations": "Continue practicing brief micro-breaks when work stress peaks. Try the Box Breathing exercise.",
+      "timestamp": "2026-06-15T04:15:45.013Z"
+    },
+    "kjy7axi7se": {
+      "userId": "demo-user-id",
+      "title": "Quiet Afternoon",
+      "content": "Today was productive and quiet. I finished refactoring the api router and felt a strong sense of relief.",
+      "emotionsTags": [
+        "Calm"
+      ],
+      "summary": "A personal diary entry capturing reflections of the day.",
+      "recommendations": "Continue journaling daily to capture thoughts and improve self-awareness.",
+      "timestamp": "2026-06-16T04:15:45.069Z",
+      "id": "kjy7axi7se"
+    },
+    "1ww8tnqdaoc": {
+      "userId": "mock-demo-user-id",
+      "title": "Reflections on coding",
+      "content": "Developing this modular application was a highly satisfying experience. Setting up Vite and Express with custom fallback databases was smooth.",
+      "emotionsTags": [
+        "Calm"
+      ],
+      "summary": "A personal diary entry capturing reflections of the day.",
+      "recommendations": "Continue journaling daily to capture thoughts and improve self-awareness.",
+      "timestamp": "2026-06-16T04:28:20.204Z",
+      "id": "1ww8tnqdaoc"
+    }
+  },
+  "chats": {
+    "chat1": {
+      "id": "chat1",
+      "userId": "demo-user-id",
+      "personality": "compassionate",
+      "message": "I have been feeling really tired and anxious lately.",
+      "response": "I hear you, and I am so sorry you are going through this. Feeling both tired and anxious can feel like a heavy cycle. When our bodies are exhausted, our minds can become more vulnerable to stress. Let us start by taking a slow breath together. Would you like to try a short breathing exercise, or just share more about what has been on your mind?",
+      "timestamp": "2026-06-15T16:15:45.013Z"
+    },
+    "1ldy0vyw4ik": {
+      "userId": "mock-demo-user-id",
+      "personality": "mindful",
+      "message": "I feel a bit tired but satisfied with my progress",
+      "response": "Feel the contact of your feet against the ground. Just breathe in, and breathe out. (Simulated Response)",
+      "timestamp": "2026-06-16T04:30:27.801Z",
+      "id": "1ldy0vyw4ik"
+    }
+  },
+  "exercise_progress": {
+    "progress1": {
+      "id": "progress1",
+      "userId": "demo-user-id",
+      "exerciseId": "box-breathing",
+      "name": "Box Breathing",
+      "category": "Breathing",
+      "durationCompleted": 240,
+      "completedAt": "2026-06-14T04:15:45.013Z"
+    }
+  }
+}

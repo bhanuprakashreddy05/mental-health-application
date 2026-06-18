@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased text-wellness-dark-900 bg-wellness-blue-50/40;
+  }
+
+  body.dark {
+    @apply text-gray-100 bg-wellness-dark-950;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
+  }
+}
+
+@layer components {
+  /* Glassmorphism card utility */
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-sm rounded-2xl;
+  }
+
+  .dark .glass-card {
+    @apply bg-wellness-dark-900/80 backdrop-blur-md border border-wellness-dark-800/40 shadow-md;
+  }
+
+  .glass-input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-wellness-lavender-500/30 focus:border-wellness-lavender-500 transition-all duration-200;
+  }
+
+  .dark .glass-input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-wellness-dark-700 bg-wellness-dark-800/50 focus:bg-wellness-dark-800 focus:outline-none focus:ring-2 focus:ring-wellness-lavender-500/30 focus:border-wellness-lavender-500 text-white transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply px-5 py-2.5 rounded-xl font-medium text-white bg-wellness-lavender-600 hover:bg-wellness-lavender-700 shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 rounded-xl font-medium text-wellness-lavender-700 bg-wellness-lavender-100 hover:bg-wellness-lavender-200 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .dark .btn-secondary {
+    @apply text-wellness-lavender-200 bg-wellness-lavender-900/30 hover:bg-wellness-lavender-900/50;
+  }
+
+  .btn-flat {
+    @apply px-5 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-gray-100 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .dark .btn-flat {
+    @apply text-gray-300 hover:bg-wellness-dark-800;
+  }
+}
+
+/* Custom Scrollbar for Chat & Timeline */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-wellness-dark-700;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-300;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-wellness-dark-600;
+}

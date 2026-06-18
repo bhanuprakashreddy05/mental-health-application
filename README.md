@@ -1,8 +1,10 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Peaceful Mind - AI Mental Health & Wellness Web Application
 
-# Run and deploy your AI Studio app
+[![Peaceful Mind CI/CD Pipeline](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/actions)
+
+Create a modern, responsive web application for desktop and mobile browsers supporting emotion tracking, mood charts, private diary logs with AI summarization, AI chat companion, self-care exercise players, and profile configurations.
+
+## Run and deploy your AI Studio app
 
 This contains everything you need to run your app locally.
 

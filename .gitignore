@@ -16,3 +16,16 @@
 local.properties
 .env
 debug.keystore
+
+# Node.js
+node_modules/
+**/node_modules/
+frontend/dist/
+frontend/candidate-e2e-report.json
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.xlsx
+
