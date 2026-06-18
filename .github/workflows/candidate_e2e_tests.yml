@@ -1,0 +1,57 @@
+name: Candidate E2E Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend/e2e/**'
+      - 'frontend/reportGenerator.js'
+      - 'frontend/package.json'
+      - '.github/workflows/candidate_e2e_tests.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'frontend/e2e/**'
+      - 'frontend/reportGenerator.js'
+      - 'frontend/package.json'
+      - '.github/workflows/candidate_e2e_tests.yml'
+  workflow_dispatch:
+
+jobs:
+  candidate-e2e-tests:
+    name: Candidate E2E Suite Run
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start Vite Development Server
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:5173 -t 30000
+
+      - name: Run Candidate E2E Tests
+        continue-on-error: true
+        env:
+          BASE_URL: http://localhost:5173
+          CI: 'true'
+        run: npm run candidate-e2e
+
+      - name: Upload Candidate E2E Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: candidate-e2e-reports
+          path: frontend/candidate-e2e-report.json

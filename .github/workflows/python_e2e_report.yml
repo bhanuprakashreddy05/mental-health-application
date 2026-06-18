@@ -1,0 +1,46 @@
+name: Python E2E Simulation Report
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'run_e2e_tests.py'
+      - 'requirements.txt'
+      - '.github/workflows/python_e2e_report.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'run_e2e_tests.py'
+      - 'requirements.txt'
+      - '.github/workflows/python_e2e_report.yml'
+  workflow_dispatch:
+
+jobs:
+  python-e2e-report:
+    name: Run Python E2E Simulation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run E2E Test Simulation
+        run: python run_e2e_tests.py
+
+      - name: Upload E2E Test Report Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: peacemind-e2e-test-reports
+          path: |
+            E2E_Test_Report_PeaceMind.xlsx
+            E2E_Test_Report_PeaceMind_*.xlsx
