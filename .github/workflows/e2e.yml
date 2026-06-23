@@ -218,8 +218,22 @@ jobs:
       - name: Compile Master Report
         run: node e2e-pipeline/compile-report.js
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: pip install openpyxl
+
+      - name: Generate Excel Reports
+        run: python e2e-pipeline/generate_excel_reports.py
+
       - name: Upload Master Test Report
         uses: actions/upload-artifact@v4
         with:
           name: peaceful-mind-test-report
-          path: e2e-pipeline/master-report.html
+          path: |
+            e2e-pipeline/master-report.html
+            k6_load_test_report.xlsx
+            peaceful_mind_e2e_and_load_report.xlsx
