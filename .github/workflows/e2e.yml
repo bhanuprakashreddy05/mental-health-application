@@ -237,3 +237,4 @@ jobs:
             e2e-pipeline/master-report.html
             k6_load_test_report.xlsx
             peaceful_mind_e2e_and_load_report.xlsx
+            peaceful_mind_selenium_appium_report.xlsx
