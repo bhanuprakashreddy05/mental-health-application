@@ -8,6 +8,10 @@ Sheets:
   2. Test Results   - All 300 test cases with status, severity, and timing
   3. Vulnerability Report - Failed tests with OWASP category, CVE, and remediation
 """
+import sys, io
+# Force UTF-8 output on Windows to avoid cp1252 errors with emoji characters
+if hasattr(sys.stdout, 'buffer'):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
 import openpyxl
 from openpyxl.styles import (
@@ -470,13 +474,13 @@ def main():
 
     # Load JSON report
     if not os.path.exists(REPORT_JSON):
-        print(f"⚠️  Report JSON not found at: {REPORT_JSON}")
+        print(f"[WARN] Report JSON not found at: {REPORT_JSON}")
         print("   Generating minimal placeholder report...")
         report = _generate_placeholder_report()
     else:
-        with open(REPORT_JSON, 'r') as f:
+        with open(REPORT_JSON, 'r', encoding='utf-8') as f:
             report = json.load(f)
-        print(f"✅ Loaded report: {REPORT_JSON}")
+        print(f"[OK] Loaded report: {REPORT_JSON}")
 
     # Build workbook
     wb = openpyxl.Workbook()
@@ -485,14 +489,16 @@ def main():
     build_vulnerability_sheet(wb, report)
 
     # Save
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    out_dir = os.path.dirname(OUTPUT_PATH)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
     wb.save(OUTPUT_PATH)
     abs_path = os.path.abspath(OUTPUT_PATH)
-    print(f"\n✅ Excel report generated successfully!")
-    print(f"📄 File: {abs_path}")
-    print(f"📊 Sheets: Summary, Test Results, Vulnerability Report")
-    print(f"🔢 Tests: {report['summary']['total']} | Pass: {report['summary']['passed']} | Fail: {report['summary']['failed']}")
-    print(f"🛡️  Security Grade: {report['summary']['security_grade']}")
+    print(f"\n[OK] Excel report generated successfully!")
+    print(f"[FILE] {abs_path}")
+    print(f"[INFO] Sheets: Summary, Test Results, Vulnerability Report")
+    print(f"[INFO] Tests: {report['summary']['total']} | Pass: {report['summary']['passed']} | Fail: {report['summary']['failed']}")
+    print(f"[INFO] Security Grade: {report['summary']['security_grade']}")
 
 
 def _generate_placeholder_report():
