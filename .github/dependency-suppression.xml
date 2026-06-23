@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  OWASP Dependency-Check Suppression File
+  KisaanConnect - Peaceful Mind
+  
+  Use this file to suppress known false positives or accepted risks.
+  Reference: https://jeremylong.github.io/DependencyCheck/general/suppression.html
+-->
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  
+  <!--
+    Add suppression entries here for known false positives.
+    
+    Example format:
+    <suppress>
+      <notes>Known false positive for development-only package</notes>
+      <packageUrl regex="true">^pkg:npm/some-dev-package@.*$</packageUrl>
+      <cve>CVE-2021-XXXXX</cve>
+    </suppress>
+    
+    <suppress until="2024-12-31">
+      <notes>Accepted risk – patched in next release sprint</notes>
+      <packageUrl regex="true">^pkg:npm/some-package@1\.0\..*$</packageUrl>
+      <vulnerabilityName regex="true">.*prototype pollution.*</vulnerabilityName>
+    </suppress>
+  -->
+  
+</suppressions>

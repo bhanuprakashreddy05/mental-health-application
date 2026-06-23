@@ -1,0 +1,108 @@
+# ZAP Rules - KisaanConnect Vulnerability Security Pipeline
+# Format: ruleId \t WARN|IGNORE|FAIL
+# Reference: https://www.zaproxy.org/docs/docker/baseline-scan/
+
+# ── Informational / Low-noise rules ──────────────────────────────────────────
+10015	IGNORE	# Incomplete or No Cache-control Header Set (informational)
+10016	IGNORE	# Web Browser XSS Protection Not Enabled (deprecated)
+10017	IGNORE	# Cross-Domain JavaScript Source File Inclusion
+10019	IGNORE	# Content-Type Header Missing
+10020	WARN	# Anti-clickjacking Header
+10021	WARN	# X-Content-Type-Options Header Missing
+10023	WARN	# Information Disclosure - Debug Error Messages
+10024	WARN	# Information Disclosure - Sensitive Information in URL
+10025	WARN	# Information Disclosure - Sensitive Information in HTTP Referrer Header
+10026	WARN	# HTTP Parameter Override
+10027	WARN	# Information Disclosure - Suspicious Comments
+10028	WARN	# Open Redirect
+10029	WARN	# Cookie Poisoning
+10030	WARN	# User Controllable Charset
+10031	WARN	# User Controllable HTML Element Attribute (Potential XSS)
+10032	WARN	# Viewstate Scanner
+10033	WARN	# Directory Browsing
+10034	WARN	# Heartbleed OpenSSL Vulnerability
+10035	WARN	# Strict-Transport-Security Header
+10036	WARN	# HTTP Server Response Header
+10037	WARN	# Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s)
+10038	WARN	# Content Security Policy (CSP) Header Not Set
+10039	WARN	# X-Backend-Server Header Information Leak
+10040	WARN	# Secure Pages Include Mixed Content
+10041	WARN	# HTTP to HTTPS Insecure Transition in Form Post
+10042	WARN	# HTTPS to HTTP Insecure Transition in Form Post
+10043	WARN	# User Controllable JavaScript Event (XSS)
+10044	WARN	# Big Redirect Detected (Potential Sensitive Information Leak)
+10045	WARN	# Source Code Disclosure - /WEB-INF folder
+10046	WARN	# Insecure Component
+10047	WARN	# HTTPS Content Available via HTTP
+10048	WARN	# Remote Code Execution - Shell Shock
+10049	WARN	# Non-Storable Content
+10050	WARN	# Retrieved from Cache
+10052	WARN	# X-ChromeLogger-Data (XCOLD) Header Information Leak
+10054	WARN	# Cookie without SameSite Attribute
+10055	WARN	# CSP Scanner
+10056	WARN	# X-Debug-Token Information Leak
+10057	WARN	# Username Hash Found
+10058	WARN	# GET for POST
+10061	WARN	# X-AspNet-Version Response Header
+10062	WARN	# PII Scanner
+10063	WARN	# Feature Policy Header Not Set
+10070	WARN	# Use of SAML
+10094	WARN	# Base64 Disclosure
+10095	WARN	# Backup File Disclosure
+10096	WARN	# Timestamp Disclosure
+10097	WARN	# Hash Disclosure
+10098	WARN	# Cross-Domain Misconfiguration
+10099	WARN	# Source Code Disclosure
+
+# ── Medium severity – warn ────────────────────────────────────────────────────
+20012	WARN	# Anti-CSRF Tokens Check
+20014	WARN	# HTTP Parameter Pollution scanner
+20015	WARN	# Heartbleed OpenSSL Vulnerability
+20016	WARN	# Cross-Domain Requests
+20017	WARN	# Source Code Disclosure - CVE-2012-1823
+20018	WARN	# Remote Code Execution - CVE-2012-1823
+20019	WARN	# External Redirect
+
+# ── High/Critical – FAIL on these ────────────────────────────────────────────
+40003	FAIL	# CRLF Injection
+40008	FAIL	# Parameter Tampering
+40009	FAIL	# Server Side Include
+40012	FAIL	# Cross Site Scripting (Reflected)
+40013	FAIL	# Session Fixation
+40014	FAIL	# Cross Site Scripting (Persistent)
+40016	FAIL	# Cross Site Scripting (Persistent) - Prime
+40017	FAIL	# Cross Site Scripting (Persistent) - Spider
+40018	FAIL	# SQL Injection
+40019	FAIL	# SQL Injection - MySQL
+40020	FAIL	# SQL Injection - Hypersonic SQL
+40021	FAIL	# SQL Injection - Oracle
+40022	FAIL	# SQL Injection - PostgreSQL
+40023	FAIL	# Possible Username Enumeration
+40024	FAIL	# SQL Injection - SQLite
+40025	FAIL	# Proxy Disclosure
+40026	FAIL	# Cross Site Scripting (DOM Based)
+40027	FAIL	# SQL Injection - MsSQL
+40028	FAIL	# ELMAH Information Leak
+40029	FAIL	# Trace.axd Information Leak
+40030	FAIL	# .htaccess Information Leak
+40031	FAIL	# Loosely Scoped Cookie
+40032	FAIL	# .env Information Leak
+40034	FAIL	# .DS_Store Information Leak
+40035	FAIL	# Hidden File Finder
+40040	FAIL	# CORS Misconfiguration
+90001	FAIL	# Insecure JSF ViewState
+90011	FAIL	# Charset Mismatch
+90017	FAIL	# XSLT Injection
+90019	FAIL	# Server Side Code Injection
+90020	FAIL	# Remote OS Command Injection
+90021	FAIL	# XPath Injection
+90022	FAIL	# Application Error Disclosure
+90023	FAIL	# XML External Entity Attack
+90024	FAIL	# Generic Padding Oracle
+90025	FAIL	# Expression Language Injection
+90026	FAIL	# SOAP Action Spoofing
+90027	FAIL	# Cookie Slack Detector
+90028	FAIL	# Insecure HTTP Method
+90029	FAIL	# SOAP XML Injection
+90030	FAIL	# WSDL File Detection
+90033	FAIL	# Loosely Scoped Cookie
