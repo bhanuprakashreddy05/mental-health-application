@@ -29,3 +29,7 @@ venv/
 __pycache__/
 *.xlsx
 
+# E2E Pipeline Reports
+e2e-pipeline/reports/
+e2e-pipeline/master-report.html
+
