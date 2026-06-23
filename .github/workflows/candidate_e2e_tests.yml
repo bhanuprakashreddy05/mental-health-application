@@ -5,14 +5,14 @@ on:
     branches: [ main ]
     paths:
       - 'frontend/e2e/**'
-      - 'frontend/reportGenerator.js'
+      - 'frontend/reportGenerator.cjs'
       - 'frontend/package.json'
       - '.github/workflows/candidate_e2e_tests.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'frontend/e2e/**'
-      - 'frontend/reportGenerator.js'
+      - 'frontend/reportGenerator.cjs'
       - 'frontend/package.json'
       - '.github/workflows/candidate_e2e_tests.yml'
   workflow_dispatch:
@@ -35,20 +35,25 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install Dependencies
+      - name: Install Backend Dependencies
+        working-directory: backend
         run: npm install
 
-      - name: Start Vite Development Server
-        run: |
-          npm run dev &
-          npx wait-on http://localhost:5173 -t 30000
+      - name: Install Frontend Dependencies
+        run: npm install
 
-      - name: Run Candidate E2E Tests
-        continue-on-error: true
+      - name: Start Servers & Run Candidate E2E Tests
         env:
-          BASE_URL: http://localhost:5173
+          BASE_URL: http://localhost:3000
           CI: 'true'
-        run: npm run candidate-e2e
+        run: |
+          cd ../backend
+          npm start &
+          npx wait-on http://localhost:5000 -t 30000
+          cd ../frontend
+          npm run dev &
+          npx wait-on http://localhost:3000 -t 30000
+          npm run candidate-e2e
 
       - name: Upload Candidate E2E Test Reports
         uses: actions/upload-artifact@v4

@@ -45,7 +45,7 @@ jobs:
         run: npm run lint
 
       - name: Run Frontend Unit Tests
-        run: npm test -- --watchAll=false
+        run: npm test
 
       - name: Compile Production Build
         run: npm run build

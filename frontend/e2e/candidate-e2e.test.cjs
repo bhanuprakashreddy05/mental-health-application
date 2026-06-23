@@ -11,7 +11,7 @@
 
 const { Builder, By, until, Key } = require('selenium-webdriver');
 require('chromedriver');
-const reportGenerator = require('../reportGenerator');
+const reportGenerator = require('../reportGenerator.cjs');
 
 // Test configuration
 const BASE_URL = process.env.BASE_URL || 'https://github.com/bhanuprakashreddy05/mental-health-application';
@@ -129,7 +129,7 @@ describe('Candidate E2E Workflow', function() {
 
         // Navigate to signup page
         log('Navigating to signup page...');
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
 
         // Wait for page to load - look for form
         await driver.wait(until.elementLocated(By.css('form')), 15000);
@@ -169,7 +169,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up') || text.toLowerCase().includes('signUp')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             log('Clicked signup button');
             break;
           }
@@ -224,7 +224,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign in') || text.toLowerCase().includes('login')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             log('Clicked login button');
             break;
           }
@@ -236,7 +236,7 @@ describe('Candidate E2E Workflow', function() {
 
         // Verify we're on candidate dashboard
         const currentUrl = await driver.getCurrentUrl();
-        const isCandidateDashboard = currentUrl.includes('/candidate/dashboard');
+        const isCandidateDashboard = currentUrl.includes('/dashboard');
 
         if (isCandidateDashboard) {
           addResult('Login - Login with new account', true);
@@ -260,10 +260,10 @@ describe('Candidate E2E Workflow', function() {
     it('should navigate to profile page', async function() {
       try {
         log('Navigating to profile page...');
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
 
-        // Wait for page to load - look for section with id="personal"
-        await driver.wait(until.elementLocated(By.id('personal')), 15000);
+        // Wait for page to load - look for header element
+        await driver.wait(until.elementLocated(By.css('h1')), 15000);
         await driver.sleep(1000);
 
         const currentUrl = await driver.getCurrentUrl();
@@ -518,7 +518,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('save') || text.toLowerCase().includes('draft')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             log(`Clicked button: ${text}`);
             saveClicked = true;
             break;
@@ -560,7 +560,7 @@ describe('Candidate E2E Workflow', function() {
     it('should navigate to dashboard', async function() {
       try {
         log('Navigating to dashboard...');
-        await driver.get(`${BASE_URL}/candidate/dashboard`);
+        await driver.get(`${BASE_URL}/dashboard`);
 
         // Wait for dashboard to load
         await driver.wait(until.elementLocated(By.css('body')), 10000);
@@ -610,12 +610,12 @@ describe('Candidate E2E Workflow', function() {
 
         // Check localStorage for user data
         const userData = await driver.executeScript(() => {
-          return localStorage.getItem('user');
+          return localStorage.getItem('pm_user');
         });
 
         if (userData) {
           const user = JSON.parse(userData);
-          log(`User logged in: ${user.full_name || user.email || 'Unknown'}`);
+          log(`User logged in: ${user.displayName || user.email || 'Unknown'}`);
           addResult('Dashboard - Verify user is logged in', true);
         } else {
           addResult('Dashboard - Verify user is logged in', false, 'No user data found in localStorage');
@@ -641,7 +641,7 @@ describe('Candidate E2E Workflow', function() {
         const shortPassword = 'abc'; // Less than 6 characters
 
         // Navigate to signup page
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -659,7 +659,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -693,7 +693,7 @@ describe('Candidate E2E Workflow', function() {
         log('Testing signup with mismatched passwords...');
 
         // Navigate to signup page
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -710,7 +710,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -789,7 +789,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign in') || text.toLowerCase().includes('login')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -822,7 +822,7 @@ describe('Candidate E2E Workflow', function() {
         log('Testing IDOR vulnerability...');
 
         // Try to access another candidate's profile directly
-        await driver.get(`${BASE_URL}/candidate/profile/other-id`);
+        await driver.get(`${BASE_URL}/profile/other-id`);
         await driver.sleep(2000);
 
         const currentUrl = await driver.getCurrentUrl();
@@ -861,7 +861,7 @@ describe('Candidate E2E Workflow', function() {
 
         const validPassword = 'password123';
 
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -874,7 +874,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -910,7 +910,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign in') || text.toLowerCase().includes('login')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -942,7 +942,7 @@ describe('Candidate E2E Workflow', function() {
 
         const longName = 'A'.repeat(150);
 
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -955,7 +955,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -985,7 +985,7 @@ describe('Candidate E2E Workflow', function() {
 
         const longEmail = 'a'.repeat(250) + '@test.com';
 
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -998,7 +998,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -1025,7 +1025,7 @@ describe('Candidate E2E Workflow', function() {
       try {
         log('Testing phone field length validation...');
 
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.wait(until.elementLocated(By.id('personal')), 10000);
 
         const longPhone = '1'.repeat(25);
@@ -1058,7 +1058,7 @@ describe('Candidate E2E Workflow', function() {
 
         const longLocation = 'Address Line 1, Address Line 2, Address Line 3, City, State, Country, Pincode '.repeat(5);
 
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.wait(until.elementLocated(By.id('personal')), 10000);
 
         const locationInput = await driver.findElement(By.xpath('.//label[contains(., "Location")]/following-sibling::input'));
@@ -1089,7 +1089,7 @@ describe('Candidate E2E Workflow', function() {
 
         const longSkills = 'JavaScript, React, Node.js, Python, Java, SQL, MongoDB, Docker, Kubernetes, AWS, GCP, Azure, Git, CI/CD, DevOps, Microservices, REST API, GraphQL '.repeat(6);
 
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.wait(until.elementLocated(By.id('skills')), 10000);
 
         const skillInput = await driver.findElement(By.css('input[placeholder*="skill" i]'));
@@ -1120,7 +1120,7 @@ describe('Candidate E2E Workflow', function() {
 
         const longSummary = 'Worked on multiple projects. '.repeat(150);
 
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.wait(until.elementLocated(By.id('experience')), 10000);
 
         const summaryTextarea = await driver.findElement(By.css('textarea'));
@@ -1158,7 +1158,7 @@ describe('Candidate E2E Workflow', function() {
 
         const xssName = '<script>alert("XSS")</script>Test';
 
-        await driver.get(`${BASE_URL}/signup`);
+        await driver.get(`${BASE_URL}/register`);
         await driver.wait(until.elementLocated(By.css('form')), 15000);
 
         const inputs = await driver.findElements(By.css('form input'));
@@ -1171,7 +1171,7 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('sign up')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
@@ -1200,7 +1200,7 @@ describe('Candidate E2E Workflow', function() {
 
         const sqliPayload = "' OR '1'='1";
 
-        await driver.get(`${BASE_URL}/candidate/jobs`);
+        await driver.get(`${BASE_URL}/exercises`);
         await driver.sleep(2000);
 
         const searchInputs = await driver.findElements(By.css('input[type="search"]'));
@@ -1232,7 +1232,7 @@ describe('Candidate E2E Workflow', function() {
 
         const xssPayload = '<img src=x onerror=alert("XSS")>';
 
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.wait(until.elementLocated(By.id('personal')), 10000);
 
         const locationInput = await driver.findElement(By.xpath('.//label[contains(., "Location")]/following-sibling::input'));
@@ -1246,16 +1246,16 @@ describe('Candidate E2E Workflow', function() {
         for (const button of buttons) {
           const text = await button.getText();
           if (text.toLowerCase().includes('save')) {
-            await button.click();
+            await driver.executeScript('arguments[0].click();', button);
             break;
           }
         }
 
         await driver.sleep(2000);
 
-        await driver.get(`${BASE_URL}/candidate/dashboard`);
+        await driver.get(`${BASE_URL}/dashboard`);
         await driver.sleep(2000);
-        await driver.get(`${BASE_URL}/candidate/profile`);
+        await driver.get(`${BASE_URL}/profile`);
         await driver.sleep(2000);
 
         const pageSource = await driver.getPageSource();
@@ -1293,7 +1293,7 @@ describe('Candidate E2E Workflow', function() {
           for (const button of buttons) {
             const text = await button.getText();
             if (text.toLowerCase().includes('login')) {
-              await button.click();
+              await driver.executeScript('arguments[0].click();', button);
               break;
             }
           }
