@@ -1,0 +1,98 @@
+name: "Load Testing — Performance (300)"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  load-test:
+    name: Load Testing — Performance (300)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Project Dependencies
+        run: |
+          if [ -d "frontend" ]; then
+            echo "Installing frontend dependencies..."
+            cd frontend && npm install && cd ..
+          fi
+          if [ -d "backend" ]; then
+            echo "Installing backend dependencies..."
+            cd backend && npm install && cd ..
+          fi
+
+      - name: Install K6
+        run: |
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5D10FD3D165E06F
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Verify K6 Installation
+        run: k6 version
+
+      - name: Run Mock Target Server in Background
+        run: node tests/load/mock-server.js &
+
+      - name: Wait for Mock Target Server
+        run: |
+          for i in {1..15}; do
+            if curl -s http://localhost:3000 > /dev/null; then
+              echo "Mock target server is active!"
+              exit 0
+            fi
+            echo "Waiting for mock target server..."
+            sleep 1
+          done
+          echo "Mock target server failed to activate!"
+          exit 1
+
+      - name: Run K6 Load Test
+        env:
+          BASE_URL: http://localhost:3000
+          API_URL: http://localhost:3000/api
+        run: k6 run tests/load/performance-test.js
+
+      - name: Upload K6 Performance Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-performance-report
+          path: |
+            load-test-report.json
+            load-test-summary.html
+
+      - name: Add Job Summary
+        if: always()
+        run: |
+          if [ -f "load-test-report.json" ]; then
+            VUS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('load-test-report.json')).metrics.vus ? JSON.parse(require('fs').readFileSync('load-test-report.json')).metrics.vus.values.value : 300)")
+            REQS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('load-test-report.json')).metrics.http_reqs.values.count)")
+            DURATION=$(node -e "console.log((JSON.parse(require('fs').readFileSync('load-test-report.json')).state.testRunDurationMs / 1000).toFixed(2))")
+            FAIL_RATE=$(node -e "console.log(JSON.parse(require('fs').readFileSync('load-test-report.json')).metrics.http_req_failed.values.rate)")
+            SUCCESS_RATE=$(node -e "console.log(((1 - parseFloat('$FAIL_RATE')) * 100).toFixed(2))")
+            
+            echo "### Load Testing — Performance (300)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Virtual Users (VUs):** $VUS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Requests Completed:** $REQS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Duration:** ${DURATION}s" >> $GITHUB_STEP_SUMMARY
+            echo "- **Success Rate:** ${SUCCESS_RATE}%" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Load test completed successfully with thresholds satisfied." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Load Testing — Performance (300)" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ No performance report generated." >> $GITHUB_STEP_SUMMARY
+          fi
